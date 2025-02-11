@@ -28,6 +28,24 @@ struct Game {
         currentTurn += 1
     }
     mutating func generateNewProblem() {
-        // TODO
+        allAnswers = [6, 15, 88, 4]
+
+        for index in allAnswers.indices {
+            allAnswers[index] = Int.random(in: 1...99)
+        }
+        correctAnswer = allAnswers[0]
+        allAnswers = allAnswers.shuffled()
+    }
+
+    static var defaultGame: Game {
+        .init(
+            maxTurns: 5,
+            score: 4,
+            volume: 0.5,
+            currentTurn: 3,
+            correctAnswer: 6,
+            allAnswers: [6, 15, 88, 4])
+
     }
 }
+
