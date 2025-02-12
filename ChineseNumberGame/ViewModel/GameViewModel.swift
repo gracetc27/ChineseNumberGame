@@ -11,7 +11,7 @@ import SwiftUI
 @Observable
 class GameViewModel {
     var gameModel: Game = .defaultGame
-    private var audioPlayer: AVAudioPlayer?
+    private var audioPlayer: AVQueuePlayer?
 
     func randomSuccessSound() {
         playSound(name: ["awesome", "bell", "correct", "whoop", "yes"].randomElement() ?? "correct")
@@ -62,13 +62,11 @@ class GameViewModel {
         guard let soundURL = Bundle.main.url(forResource: name, withExtension: ext) else {
             return
         }
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
-            audioPlayer?.prepareToPlay()
-            audioPlayer?.volume = gameModel.volume
-            audioPlayer?.play()
-        } catch let error {
-            print(error.localizedDescription)
+        if audioPlayer == nil {
+            audioPlayer = AVQueuePlayer()
         }
+        audioPlayer?.insert(AVPlayerItem(url: soundURL), after: nil)
+        audioPlayer?.volume = gameModel.volume
+        audioPlayer?.play()
     }
 }
