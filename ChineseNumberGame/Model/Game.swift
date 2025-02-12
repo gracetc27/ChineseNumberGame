@@ -28,11 +28,7 @@ struct Game {
         currentTurn += 1
     }
     mutating func generateNewProblem() {
-        allAnswers = [6, 15, 88, 4]
-
-        for index in allAnswers.indices {
-            allAnswers[index] = Int.random(in: 1...99)
-        }
+        allAnswers = Int.getUniqueRandomNumbers(count: 4, lower: 0, upper: 99)
         correctAnswer = allAnswers[0]
         allAnswers = allAnswers.shuffled()
     }
@@ -44,7 +40,7 @@ struct Game {
             volume: 0.5,
             currentTurn: 3,
             correctAnswer: 6,
-            allAnswers: [6, 15, 88, 4])
+            allAnswers: [6, 15, 88, 4].shuffled())
 
     }
 }

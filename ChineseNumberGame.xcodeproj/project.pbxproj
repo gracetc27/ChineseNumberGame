@@ -30,11 +30,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A33D41782D5BA7F4002BA3A8 /* ChineseNumberGame */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ChineseNumberGame;
-			sourceTree = "<group>";
-		};
 		A33D41892D5BA7F5002BA3A8 /* ChineseNumberGameTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ChineseNumberGameTests;
@@ -43,6 +38,11 @@
 		A33D41932D5BA7F5002BA3A8 /* ChineseNumberGameUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ChineseNumberGameUITests;
+			sourceTree = "<group>";
+		};
+		A33D41C82D5CC6E9002BA3A8 /* ChineseNumberGame */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ChineseNumberGame;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,7 +75,7 @@
 		A33D416D2D5BA7F4002BA3A8 = {
 			isa = PBXGroup;
 			children = (
-				A33D41782D5BA7F4002BA3A8 /* ChineseNumberGame */,
+				A33D41C82D5CC6E9002BA3A8 /* ChineseNumberGame */,
 				A33D41892D5BA7F5002BA3A8 /* ChineseNumberGameTests */,
 				A33D41932D5BA7F5002BA3A8 /* ChineseNumberGameUITests */,
 				A33D41772D5BA7F4002BA3A8 /* Products */,
@@ -108,7 +108,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				A33D41782D5BA7F4002BA3A8 /* ChineseNumberGame */,
+				A33D41C82D5CC6E9002BA3A8 /* ChineseNumberGame */,
 			);
 			name = ChineseNumberGame;
 			packageProductDependencies = (
