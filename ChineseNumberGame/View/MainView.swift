@@ -9,30 +9,19 @@ import SwiftUI
 
 struct MainView: View {
     @Environment(GameViewModel.self) var gVM
+    @State private var showSettings = false
+    @State private var showPinyin = false
     var body: some View {
-        VStack(spacing: 10) {
-            Button("play success") {
-                gVM.randomSuccessSound()
+        ZStack {
+            GearIconView(showSettings: $showSettings)
+            VStack {
+                ScoreView(maxTurns: gVM.gameModel.maxTurns, score: gVM.gameModel.score)
+                Toggle(showPinyin ? "Hide Pinyin" : "Show Pinyin", isOn: $showPinyin.animation())
+                    .padding()
+                Spacer()
             }
-
-            Button("play failure") {
-                gVM.randomFailureSound()
-            }
-
-            Button("3") {
-                gVM.playNumberSound(num: 3)
-            }
-
-            Button("18") {
-                gVM.playNumberSound(num: 18)
-            }
-
-            Button("65") {
-                gVM.playNumberSound(num: 65)
-            }
-
+            .padding()
         }
-        .padding()
     }
 }
 
