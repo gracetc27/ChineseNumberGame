@@ -1,5 +1,5 @@
 //
-//  Chinese.swift
+//  Int-ChineseSupport.swift
 //  ChineseNumberGame
 //
 //  Created by Grace couch on 12/02/2025.
@@ -7,7 +7,7 @@
 import Foundation
 
 
-struct Chinese {
+extension Int {
     static func num99toChinese(num: Int) -> (chinese: String, pinyin: String)? {
         let chineseWithPinyin: [(chinese: String, pinyin: String)] = [
             ("零","líng"),

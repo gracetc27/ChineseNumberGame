@@ -51,14 +51,14 @@ struct ChineseNumberGameTests {
         ]
 
         for i in 0..<nums.count {
-            let number1 = Chinese.num99toChinese(num: nums[i])
+            let number1 = Int.num99toChinese(num: nums[i])
             let number2 = expectedResults[i]
             if let number1, let number2 {
                 #expect(number1.chinese == number2.chinese)
             }
         }
         for num in nilNums {
-            #expect(Chinese.num99toChinese(num: num) == nil)
+            #expect(Int.num99toChinese(num: num) == nil)
         }
     }
 
