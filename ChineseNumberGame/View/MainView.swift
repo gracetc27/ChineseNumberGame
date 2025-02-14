@@ -18,7 +18,17 @@ struct MainView: View {
                 ScoreView(maxTurns: gVM.gameModel.maxTurns, score: gVM.gameModel.score)
                 Toggle(showPinyin ? "Hide Pinyin" : "Show Pinyin", isOn: $showPinyin.animation())
                     .padding()
-                Spacer()
+
+                if let chineseNum = Int.num99toChinese(num: gVM.gameModel.correctAnswer) {
+                    Spacer()
+
+                    Text(chineseNum.chinese)
+                        .font(.largeTitle.bold())
+
+                    Text(chineseNum.pinyin)
+                        .font(.largeTitle)
+                        .opacity(showPinyin ? 1 : 0)
+                }
             }
             .padding()
         }
