@@ -29,6 +29,8 @@ struct MainView: View {
                         .font(.largeTitle)
                         .opacity(showPinyin ? 1 : 0)
                 }
+
+                NumberOptionsView(allAnswers: gVM.gameModel.allAnswers, correctAnswer: gVM.gameModel.correctAnswer)
             }
             .padding()
         }
