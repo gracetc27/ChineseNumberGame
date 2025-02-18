@@ -11,6 +11,11 @@ struct MainView: View {
     @Environment(GameViewModel.self) var gVM
     @State private var showSettings = false
     @State private var showPinyin = false
+    @State private var gameOver = false
+
+    var gameIsOver: Bool {
+        gVM.gameModel.gameComplete
+    }
     var body: some View {
         ZStack {
             GearIconView(showSettings: $showSettings)
@@ -33,6 +38,12 @@ struct MainView: View {
                 NumberOptionsView(allAnswers: gVM.gameModel.allAnswers, correctAnswer: gVM.gameModel.correctAnswer)
             }
             .padding()
+        }
+        .fullScreenCover(isPresented: $gameOver) {
+            GameOverView(color: .cyan)
+        }
+        .onChange(of: gameIsOver) { _ , _ in
+            gameOver = gameIsOver
         }
     }
 }

@@ -14,7 +14,7 @@ struct Game {
     var correctAnswer: Int
     var allAnswers: [Int]
     var gameComplete: Bool {
-        currentTurn >= maxTurns
+        currentTurn > maxTurns
     }
     var gameOver: Bool {
         score < 0 || gameComplete
@@ -33,12 +33,17 @@ struct Game {
         allAnswers = allAnswers.shuffled()
     }
 
+    mutating func resetGame() {
+        score = 0
+        currentTurn = 0
+    }
+
     static var defaultGame: Game {
         .init(
             maxTurns: 5,
-            score: 4,
+            score: 0,
             volume: 0.5,
-            currentTurn: 3,
+            currentTurn: 1,
             correctAnswer: 6,
             allAnswers: [6, 15, 88, 4].shuffled())
 
