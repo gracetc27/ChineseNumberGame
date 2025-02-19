@@ -12,9 +12,13 @@ struct SplashScreenView: View {
 
     @State private var opacity = 0.0
     @State private var scale = CGSize(width: 0.5, height: 0.5)
-    @State private var translation = false
+    @State private var moveUp = false
     @State private var angle = 45.0
     @State private var spacing = 5.0
+
+    var vm = ProverbViewModel()
+
+
 
     var body: some View {
         GeometryReader { proxy in
@@ -30,28 +34,38 @@ struct SplashScreenView: View {
                     .opacity(opacity)
 
                 VStack {
-                    VStack(spacing: spacing) {
-                        Text("line")
-                            .foregroundStyle(.red)
-                        Text("line")
-                            .foregroundStyle(.yellow)
-                        Text("line")
-                            .foregroundStyle(.orange)
+                    TextSubView(spacing: spacing, scale: scale, angle: angle, opacity: opacity, text1: vm.proverbModel.proverb, text2: vm.proverbModel.pinyin, text3: vm.proverbModel.translation)
+                    if moveUp {
+                        Spacer()
                     }
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(LinearGradient(colors: [.black, .gray], startPoint: .topLeading, endPoint: .bottomTrailing))
-                            .opacity(opacity)
-                    )
                 }
-                .font(.title.bold())
-                .multilineTextAlignment(.center)
-                .padding()
-                .scaleEffect(scale)
-                .rotation3DEffect(Angle(degrees: angle), axis: (x: 1.0, y: 0.0, z: 0.0))
-
-
+                VStack {
+                    Spacer()
+                    Button("Skip to game...") {
+                        withAnimation {
+                            isPresented.toggle()
+                        }
+                    }
+                    .font(.title2.bold())
+                    .foregroundStyle(.white)
+                    .padding()
+                    .background(Capsule()
+                        .fill(.ultraThinMaterial))
+                }
+            }
+        }
+        .onAppear {
+            vm.getRandomQuote()
+            withAnimation(.easeInOut(duration: 2.5)) {
+                opacity = 0.8
+                angle = 0
+                scale = CGSize(width: 1.0, height: 1.0)
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() +  1.5) {
+                withAnimation(.easeInOut(duration: 2.5)) {
+                    moveUp = true
+                    spacing = 50
+                }
             }
         }
     }
@@ -60,3 +74,5 @@ struct SplashScreenView: View {
 #Preview {
     SplashScreenView(isPresented: .constant(true))
 }
+
+

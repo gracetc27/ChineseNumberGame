@@ -14,6 +14,10 @@ class ProverbViewModel {
 
     let urlString = "https://chinese-proverbs.onrender.com/api/proverbs/random"
 
+    func getRandomQuote() {
+        getQuote(urlString: urlString)
+    }
+
     private func getQuote(urlString: String) {
         guard let url = URL(string: urlString) else { return }
 
