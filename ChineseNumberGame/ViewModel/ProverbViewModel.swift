@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+@MainActor
 @Observable
 class ProverbViewModel {
     var proverbModel: Proverb = Proverb.defaultProverb()
@@ -20,22 +20,20 @@ class ProverbViewModel {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
 
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            let decoder = JSONDecoder()
-            if let error {
-                print(error.localizedDescription)
-            }
-            guard let data = data else { return }
+        Task {
             do {
-                let newProverb = try decoder.decode(Proverb.self, from: data)
-                DispatchQueue.main.async {
+                let (data, _) = try await URLSession.shared.data(for: request)
+                let decoder = JSONDecoder()
+                do {
+                    let newProverb = try decoder.decode(Proverb.self, from: data)
                     self.proverbModel = newProverb
+                } catch {
+                    print(error.localizedDescription)
+                    print(data.description)
                 }
             } catch {
-                print(data.description)
                 print(error.localizedDescription)
             }
         }
-        task.resume()
     }
 }
