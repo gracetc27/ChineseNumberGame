@@ -10,7 +10,7 @@ import Foundation
 @MainActor
 @Observable
 class ProverbViewModel {
-    var proverbModel: Proverb = Proverb.defaultProverb()
+    var proverbModel: Proverb?
 
     let urlString = "https://chinese-proverbs.onrender.com/api/proverbs/random"
 

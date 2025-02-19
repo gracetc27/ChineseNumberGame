@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct Proverb: Codable {
+struct Proverb: Codable, Equatable {
     let id: String
     let proverb: String
     let pinyin: String
@@ -21,8 +21,8 @@ struct Proverb: Codable {
         case translation
     }
 
-    static func defaultProverb() -> Proverb {
-        Proverb(id: "63e6ae053bd28e8c186fdf9c", proverb: "龙马精神。", pinyin: "Lóng mǎ jīng shén", translation: "A dragon's and a horse's spirit.")
-
-    }
+//    static func defaultProverb() -> Proverb {
+//        Proverb(id: "63e6ae053bd28e8c186fdf9c", proverb: "龙马精神。", pinyin: "Lóng mǎ jīng shén", translation: "A dragon's and a horse's spirit.")
+//
+//    }
 }

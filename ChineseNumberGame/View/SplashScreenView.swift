@@ -15,6 +15,7 @@ struct SplashScreenView: View {
     @State private var moveUp = false
     @State private var angle = 45.0
     @State private var spacing = 5.0
+    @State private var hasAnimated = false
 
     var vm = ProverbViewModel()
 
@@ -34,7 +35,12 @@ struct SplashScreenView: View {
                     .opacity(opacity)
 
                 VStack {
-                    TextSubView(spacing: spacing, scale: scale, angle: angle, opacity: opacity, text1: vm.proverbModel.proverb, text2: vm.proverbModel.pinyin, text3: vm.proverbModel.translation)
+                    if let proverb = vm.proverbModel {
+                        TextSubView(spacing: spacing, scale: scale, angle: angle, opacity: opacity, text1: proverb.proverb, text2: proverb.pinyin, text3: proverb.translation)
+                    } else {
+                        ProgressView()
+                            .tint(.white)
+                    }
                     if moveUp {
                         Spacer()
                     }
@@ -54,19 +60,25 @@ struct SplashScreenView: View {
                 }
             }
         }
+        .onChange(of: vm.proverbModel) { _, _ in
+            if !hasAnimated {
+                Task {
+                    withAnimation(.easeInOut(duration: 2.5)) {
+                        opacity = 0.8
+                        angle = 0
+                        scale = CGSize(width: 1.0, height: 1.0)
+                    }
+                    try? await Task.sleep(for: .seconds(1.5))
+                        withAnimation(.easeInOut(duration: 2.5)) {
+                            moveUp = true
+                            spacing = 50
+                        }
+                }
+                hasAnimated = true
+            }
+        }
         .onAppear {
             vm.getRandomQuote()
-            withAnimation(.easeInOut(duration: 2.5)) {
-                opacity = 0.8
-                angle = 0
-                scale = CGSize(width: 1.0, height: 1.0)
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() +  1.5) {
-                withAnimation(.easeInOut(duration: 2.5)) {
-                    moveUp = true
-                    spacing = 50
-                }
-            }
         }
     }
 }
