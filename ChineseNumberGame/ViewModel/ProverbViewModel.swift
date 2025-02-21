@@ -10,7 +10,8 @@ import Foundation
 @MainActor
 @Observable
 class ProverbViewModel {
-    var proverbModel: Proverb?
+    var proverbModel: Result<Proverb, ProverbError>?
+    let service = ProverbService()
 
     let urlString = "https://chinese-proverbs.onrender.com/api/proverbs/random"
 
@@ -18,25 +19,13 @@ class ProverbViewModel {
         getQuote(urlString: urlString)
     }
 
+
     private func getQuote(urlString: String) {
-        guard let url = URL(string: urlString) else { return }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-
         Task {
-            do {
-                let (data, _) = try await URLSession.shared.data(for: request)
-                let decoder = JSONDecoder()
-                do {
-                    let newProverb = try decoder.decode(Proverb.self, from: data)
-                    self.proverbModel = newProverb
-                } catch {
-                    print(error.localizedDescription)
-                    print(data.description)
-                }
+            do throws(ProverbError) {
+                proverbModel = .success(try await service.getQuote(urlString: urlString))
             } catch {
-                print(error.localizedDescription)
+                proverbModel = .failure(error)
             }
         }
     }

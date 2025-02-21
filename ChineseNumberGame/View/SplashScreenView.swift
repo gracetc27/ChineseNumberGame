@@ -35,8 +35,13 @@ struct SplashScreenView: View {
                     .opacity(opacity)
 
                 VStack {
-                    if let proverb = vm.proverbModel {
-                        TextSubView(spacing: spacing, scale: scale, angle: angle, opacity: opacity, text1: proverb.proverb, text2: proverb.pinyin, text3: proverb.translation)
+                    if let result = vm.proverbModel {
+                        switch result {
+                        case .success(let proverb):
+                            TextSubView(spacing: spacing, scale: scale, angle: angle, opacity: opacity, text1: proverb.proverb, text2: proverb.pinyin, text3: proverb.translation)
+                        case .failure(let failure):
+                            EmptyView()
+                        }
                     } else {
                         ProgressView()
                             .tint(.white)
