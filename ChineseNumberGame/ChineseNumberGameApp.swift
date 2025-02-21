@@ -12,7 +12,7 @@ struct ChineseNumberGameApp: App {
     @State private var gVM = GameViewModel()
     var body: some Scene {
         WindowGroup {
-            MainView()
+            ContainerView()
                 .environment(gVM)
         }
     }
