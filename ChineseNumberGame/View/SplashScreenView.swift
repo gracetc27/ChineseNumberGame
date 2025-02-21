@@ -40,7 +40,7 @@ struct SplashScreenView: View {
                         case .success(let proverb):
                             TextSubView(spacing: spacing, scale: scale, angle: angle, opacity: opacity, text1: proverb.proverb, text2: proverb.pinyin, text3: proverb.translation)
                         case .failure(let failure):
-                            EmptyView()
+                            ProverbFailureView(scale: scale, angle: angle, opacity: opacity, error: failure.localizedDescription)
                         }
                     } else {
                         ProgressView()
