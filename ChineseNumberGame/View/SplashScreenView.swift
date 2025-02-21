@@ -17,7 +17,7 @@ struct SplashScreenView: View {
     @State private var spacing = 5.0
     @State private var hasAnimated = false
 
-    var vm = ProverbViewModel()
+    @State var vm = ProverbViewModel(service: ProverbService())
 
 
 
@@ -65,7 +65,7 @@ struct SplashScreenView: View {
                 }
             }
         }
-        .onChange(of: vm.proverbModel) { _, _ in
+        .onChange(of: vm.proverbModel) { _ , _ in
             if !hasAnimated {
                 Task {
                     withAnimation(.easeInOut(duration: 2.5)) {
@@ -82,8 +82,8 @@ struct SplashScreenView: View {
                 hasAnimated = true
             }
         }
-        .onAppear {
-            vm.getRandomQuote()
+        .task {
+            await vm.getRandomQuote()
         }
     }
 }

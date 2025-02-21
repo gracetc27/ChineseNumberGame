@@ -40,4 +40,38 @@ struct ChineseNumberGameTests {
         }
     }
 
+    @Test
+    func successfulGetProverbUpdatesModelProperty() async throws {
+        let sut = await ProverbViewModel(service: FakeProverbSuccessService())
+        await #expect(sut.proverbModel == nil)
+
+        await sut.getRandomQuote()
+        let expected = Proverb(id: "id", proverb: "proverb", pinyin: "pinyin", translation: "translation")
+        await #expect(sut.proverbModel == .success(expected))
+    }
+
+    @Test
+    func failedGetProverbUpdatesModelProperty() async throws {
+        let sut = await ProverbViewModel(service: FakeProverbFailureService())
+        await #expect(sut.proverbModel == nil)
+
+        await sut.getRandomQuote()
+        let expected = ProverbError.noData
+        await #expect(sut.proverbModel == .failure(expected))
+
+    }
+
+}
+
+
+struct FakeProverbSuccessService: ProverbServiceProtocol {
+    func getQuote(urlString: String) async throws(ProverbError) -> Proverb {
+        Proverb(id: "id", proverb: "proverb", pinyin: "pinyin", translation: "translation")
+    }
+}
+
+struct FakeProverbFailureService: ProverbServiceProtocol {
+    func getQuote(urlString: String) async throws(ProverbError) -> Proverb {
+        throw ProverbError.noData
+    }
 }
